@@ -15,5 +15,21 @@ resource demo 'Applications.Core/containers@2023-10-01-preview' = {
         }
       }
     }
+    connections: {
+      redis: {
+        source: db.id
+      }
+    }
+  }
+}
+
+@description('The environment ID of your Radius Application. Set automatically by the rad CLI.')
+param environment string
+
+resource db 'Applications.Datastores/redisCaches@2023-10-01-preview' = {
+  name: 'db'
+  properties: {
+    application: application
+    environment: environment
   }
 }
